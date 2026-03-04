@@ -1,0 +1,129 @@
+import { useState } from 'react'
+import { Layout, Menu, Input, Avatar, Typography } from 'antd'
+import type { MenuProps } from 'antd'
+import {
+  DashboardIcon,
+  AccountAcquisitionIcon,
+  AccountManagementIcon,
+  ActivityGrowthIcon,
+  SettlementRiskIcon,
+  TaskIcon,
+  KnowledgeToolsIcon,
+  NotificationIcon,
+} from './icons/SidebarIcons'
+import './App.css'
+
+const { Header, Sider, Content } = Layout
+const { Text } = Typography
+
+const menuItems: MenuProps['items'] = [
+  {
+    type: 'group',
+    label: 'MENU',
+    children: [
+      { key: 'dashboard', label: 'Dashboard', icon: <DashboardIcon /> },
+      { key: 'account-acquisition', label: 'Account Acquisition', icon: <AccountAcquisitionIcon /> },
+      { key: 'account-management', label: 'Account Management', icon: <AccountManagementIcon /> },
+      { key: 'activity-growth', label: 'Activity & Growth', icon: <ActivityGrowthIcon /> },
+      { key: 'settlement-risk', label: 'Settlement & Risk', icon: <SettlementRiskIcon /> },
+    ],
+  },
+  {
+    type: 'group',
+    label: 'GENERAL',
+    children: [
+      { key: 'task', label: 'Task', icon: <TaskIcon /> },
+      { key: 'knowledge-tools', label: 'Knowledge & Tools', icon: <KnowledgeToolsIcon /> },
+      { key: 'notification', label: 'Notification', icon: <NotificationIcon /> },
+    ],
+  },
+]
+
+const submenuByKey: Record<string, { label: string; key: string }[]> = {
+  'account-acquisition': [
+    { label: 'Prospective Customers', key: 'prospective' },
+    { label: 'Navigation', key: 'navigation' },
+    { label: 'Conversion Tracking', key: 'conversion' },
+    { label: 'Acquisition Analysis', key: 'acquisition' },
+  ],
+}
+
+function App() {
+  const [collapsed, setCollapsed] = useState(false)
+  const [selectedKey, setSelectedKey] = useState('account-acquisition')
+  const [openSubmenuKey, setOpenSubmenuKey] = useState<string | null>('account-acquisition')
+  const [selectedSubKey, setSelectedSubKey] = useState('navigation')
+
+  const onMenuClick: MenuProps['onClick'] = ({ key }) => {
+    setSelectedKey(key)
+    const subs = submenuByKey[key]
+    setOpenSubmenuKey(subs?.length ? key : null)
+    if (subs?.length) setSelectedSubKey(subs[0]?.key ?? '')
+  }
+
+  const subItems = openSubmenuKey ? submenuByKey[openSubmenuKey] ?? [] : []
+
+  return (
+    <Layout style={{ minHeight: '100vh' }}>
+      <Header className="workbench-header">
+        <div className="workbench-header-left">
+          <div style={{ width: 93, height: 26, background: 'rgba(0,0,0,0.06)', borderRadius: 4 }} />
+          <Text style={{ fontSize: 14 }}>Merchant</Text>
+        </div>
+        <div className="workbench-header-center">
+          <Input.Search placeholder="Search" allowClear size="middle" />
+        </div>
+        <div className="workbench-header-right">
+          <Avatar size={32}>AK</Avatar>
+          <Text>Alex Kelly</Text>
+        </div>
+      </Header>
+      <Layout>
+        <div className="workbench-sidebar-wrapper">
+          <Sider
+            className="workbench-sider workbench-sider--no-bg"
+            width={312}
+            collapsedWidth={96}
+            collapsed={collapsed}
+            breakpoint="lg"
+            onBreakpoint={setCollapsed}
+          >
+            <div className="workbench-sidebar-inner">
+              <Menu
+                mode="inline"
+                selectedKeys={[selectedKey]}
+                items={menuItems}
+                className="workbench-sidebar-menu"
+                onClick={onMenuClick}
+              />
+            </div>
+          </Sider>
+          {openSubmenuKey && subItems.length > 0 && (
+            <aside className="workbench-submenu-panel">
+              {subItems.map(({ label, key: subKey }) => (
+                <div
+                  key={subKey}
+                  role="button"
+                  tabIndex={0}
+                  className={`workbench-submenu-item${selectedSubKey === subKey ? ' workbench-submenu-item--selected' : ''}`}
+                  onClick={() => setSelectedSubKey(subKey)}
+                  onKeyDown={(e) => e.key === 'Enter' && setSelectedSubKey(subKey)}
+                >
+                  <span className="workbench-submenu-item-title">{label}</span>
+                  <span className="workbench-submenu-item-arrow" />
+                </div>
+              ))}
+            </aside>
+          )}
+        </div>
+        <Content className="workbench-content">
+          <div style={{ background: '#fff', padding: 24, borderRadius: 8 }}>
+            Content area placeholder
+          </div>
+        </Content>
+      </Layout>
+    </Layout>
+  )
+}
+
+export default App

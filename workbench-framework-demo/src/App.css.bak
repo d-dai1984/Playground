@@ -1,0 +1,238 @@
+/* ========== Header ========== */
+.workbench-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: 24px;
+  height: 56px;
+  line-height: 56px;
+  background: #fff !important;
+}
+
+.workbench-header-left {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.workbench-header-center {
+  flex: 1;
+  max-width: 400px;
+  margin: 0 24px;
+}
+
+.workbench-header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ========== Sidebar ========== */
+.workbench-sider--no-bg.workbench-sider,
+.workbench-sider--no-bg.workbench-sider .ant-layout-sider-children {
+  background: transparent !important;
+}
+
+.workbench-sidebar-wrapper {
+  display: flex;
+  align-items: stretch;
+  gap: 0px;
+  height: calc(100vh - 56px);
+}
+
+.workbench-sider {
+  height: 100%;
+}
+
+/* ----- ① 展开态（图标+文字）：左边距/栏宽改这里，与 ② 统一 32px；栏宽按最长文案完整显示 ----- */
+.workbench-sidebar-inner {
+  padding: 56px 0 24px 24px;
+  width: 280px;
+  min-width: 280px;
+}
+
+.workbench-sidebar-menu {
+  height: auto !important;
+  border-right: none !important;
+  background: transparent !important;
+}
+
+.workbench-sidebar-menu .ant-menu-title-content {
+  overflow: visible !important;
+  text-overflow: clip !important;
+  white-space: nowrap !important;
+}
+
+.workbench-sidebar-menu .ant-menu-item-group-title {
+  padding: 0 16px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 18px;
+  color: rgba(0, 0, 0, 0.25);
+}
+
+.workbench-sidebar-menu .ant-menu-item-group:first-of-type {
+  margin-bottom: 64px;
+}
+
+/* ① 展开态菜单项：高度/内边距/圆角/字号等改这里（padding-inline 仅展开态，不与 ② 共用） */
+.workbench-sidebar-menu .ant-menu-item-group .ant-menu-item {
+  height: 46px;
+  line-height: 46px;
+  padding-inline: 24px !important;
+  border-radius: 999px;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.workbench-sidebar-menu .ant-menu-item-group:first-of-type .ant-menu-item {
+  margin-bottom: 8px;
+}
+.workbench-sidebar-menu .ant-menu-item-group:first-of-type .ant-menu-item:last-child {
+  margin-bottom: 0;
+}
+
+.workbench-sidebar-menu .ant-menu-item-group:last-of-type .ant-menu-item {
+  margin-bottom: 4px;
+}
+.workbench-sidebar-menu .ant-menu-item-group:last-of-type .ant-menu-item:last-child {
+  margin-bottom: 0;
+}
+
+.workbench-sidebar-menu .ant-menu-item.ant-menu-item-selected {
+  background: #1677ff !important;
+  color: #fff !important;
+}
+.workbench-sidebar-menu .ant-menu-item.ant-menu-item-selected .ant-menu-title-content,
+.workbench-sidebar-menu .ant-menu-item.ant-menu-item-selected .anticon {
+  color: #fff !important;
+}
+
+.workbench-sidebar-menu .ant-menu-item .sidebar-menu-icon img {
+  filter: none;
+}
+.workbench-sidebar-menu .ant-menu-item:hover .sidebar-menu-icon img,
+.workbench-sidebar-menu .ant-menu-item.ant-menu-item-active .sidebar-menu-icon img,
+.workbench-sidebar-menu .ant-menu-item.ant-menu-item-selected .sidebar-menu-icon img {
+  filter: brightness(0) invert(1);
+}
+
+/* ----- ② 收起态（仅图标）：左边距/宽度/图标区改这里；必须覆盖 ① 的 min-width 才能收窄 ----- */
+.workbench-sider.ant-layout-sider-collapsed .workbench-sidebar-inner {
+  width: 96px !important;
+  min-width: 96px !important;
+  max-width: 96px !important;
+  padding: 56px 0 24px 24px;
+}
+
+.workbench-sider.ant-layout-sider-collapsed .workbench-sidebar-menu .ant-menu-item-group-title {
+  padding-inline: 0;
+  text-align: center;
+  color: transparent;
+}
+
+.workbench-sider.ant-layout-sider-collapsed .workbench-sidebar-menu .ant-menu-title-content {
+  position: absolute !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+  clip: rect(0,0,0,0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.workbench-sider.ant-layout-sider-collapsed .workbench-sidebar-menu .ant-menu-item-group .ant-menu-item {
+  position: relative;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding-inline: 16px !important;
+  gap: 0 !important;
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.workbench-sider.ant-layout-sider-collapsed .workbench-sidebar-menu .ant-menu-item .ant-menu-item-icon,
+.workbench-sider.ant-layout-sider-collapsed .workbench-sidebar-menu .ant-menu-item .sidebar-menu-icon {
+  margin: 0 !important;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+}
+
+/* ========== Secondary menu panel ========== */
+.workbench-submenu-panel {
+  width: 248px;
+  flex-shrink: 0;
+  background: #fbfbfb;
+  border: 1px solid #eeeff1;
+  border-radius: 16px;
+  padding: 24px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: stretch;
+}
+
+.workbench-submenu-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 40px;
+  padding: 0 16px;
+  margin: 0 4px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.workbench-submenu-item:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.workbench-submenu-item--selected {
+  background: #e6f4ff;
+  border-radius: 8px;
+  color: #1677ff;
+  border-right: 2px solid #1677ff;
+  margin-right: 2px;
+}
+
+.workbench-submenu-item-title {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.workbench-submenu-item-arrow {
+  width: 10px;
+  height: 10px;
+  flex-shrink: 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='M9 18l6-6-6-6'/%3E%3C/svg%3E") center/contain no-repeat;
+  opacity: 0.45;
+}
+
+.workbench-submenu-item--selected .workbench-submenu-item-arrow {
+  opacity: 1;
+}
+
+/* ========== Content ========== */
+.workbench-content {
+  min-height: calc(100vh - 56px);
+  padding: 24px;
+  background: #f5f5f5;
+}
+
+@media (max-width: 991px) {
+  .workbench-header-center {
+    max-width: 200px;
+  }
+}

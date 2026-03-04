@@ -1,0 +1,723 @@
+/* ========== Header ========== */
+.workbench-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: 32px;
+  height: 56px;
+  line-height: 56px;
+  background: #fff !important;
+}
+
+.workbench-header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Per Figma */
+}
+
+.workbench-logo {
+  display: flex;
+  align-items: center;
+  gap: 8.66px; /* 35.74px (left offset) - 27.08px (mark width) = 8.66px */
+  width: 93.17px;
+  height: 26px;
+}
+
+.workbench-logo-mark {
+  width: 27.08px;
+  height: 26px;
+  object-fit: contain;
+}
+
+.workbench-logo-text {
+  width: 57.42px;
+  height: 17.33px;
+  object-fit: contain;
+}
+
+.workbench-merchant-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 24px;
+  line-height: 24px;
+  padding: 0 12px;
+  border-radius: 12px;
+  border: 1px solid #1677ff;
+  color: #1677ff;
+  font-size: 10px;
+  font-weight: 400;
+  cursor: pointer;
+  box-shadow: 0 0 0 2px rgba(5, 145, 255, 0.1);
+  transition: all 0.2s;
+}
+
+.workbench-merchant-btn:hover {
+  background: rgba(22, 119, 255, 0.04);
+}
+
+.workbench-merchant-arrow {
+  width: 10px;
+  height: 10px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231677ff' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") center/contain no-repeat;
+}
+
+.workbench-header-center {
+  flex: 1;
+  max-width: 400px;
+  margin: 0 24px;
+}
+
+.workbench-search-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 32px;
+  line-height: 32px;
+  background: rgba(0, 0, 0, 0.04);
+  border-radius: 999px;
+  padding-left: 11px;
+  padding-right: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.workbench-search-bar:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.workbench-search-placeholder {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.25);
+  flex: 1;
+}
+
+.workbench-search-icon {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.workbench-search-icon::after {
+  content: "";
+  width: 14px;
+  height: 14px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='rgba(0,0,0,0.45)' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='M21 21l-4.35-4.35'/%3E%3C/svg%3E") center/contain no-repeat;
+}
+
+.workbench-header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.workbench-username {
+  font-weight: 700 !important;
+  color: #000;
+}
+
+/* ========== Sidebar ========== */
+.workbench-sider--no-bg.workbench-sider,
+.workbench-sider--no-bg.workbench-sider .ant-layout-sider-children {
+  background: transparent !important;
+}
+
+.workbench-sidebar-wrapper {
+  display: flex;
+  align-items: stretch;
+  gap: 0px;
+  height: calc(100vh - 56px);
+}
+
+.workbench-sider {
+  height: 100%;
+}
+
+/* ----- ① 展开态（图标+文字）：左右边距 24px ----- */
+.workbench-sidebar-inner {
+  padding: 56px 24px 24px 24px;
+  width: 280px;
+  min-width: 280px;
+}
+
+.workbench-sidebar-menu {
+  height: auto !important;
+  border-right: none !important;
+  background: transparent !important;
+}
+
+.workbench-sidebar-menu .ant-menu-title-content {
+  overflow: visible !important;
+  text-overflow: clip !important;
+  white-space: nowrap !important;
+}
+
+.workbench-sidebar-menu .ant-menu-item-group-title {
+  padding: 0 16px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 18px;
+  color: rgba(0, 0, 0, 0.25);
+}
+
+.workbench-sidebar-menu .ant-menu-item-group:first-of-type {
+  margin-bottom: 64px;
+}
+
+/* ① 展开态菜单项：高度/内边距/圆角/字号等改这里（与收起态一致用 16px，保证图标不横跳） */
+.workbench-sidebar-menu .ant-menu-item-group .ant-menu-item {
+  height: 46px;
+  line-height: 46px;
+  padding-inline: 16px !important;
+  border-radius: 999px;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.workbench-sidebar-menu .ant-menu-item-group:first-of-type .ant-menu-item {
+  margin-bottom: 8px;
+}
+.workbench-sidebar-menu .ant-menu-item-group:first-of-type .ant-menu-item:last-child {
+  margin-bottom: 0;
+}
+
+.workbench-sidebar-menu .ant-menu-item-group:last-of-type .ant-menu-item {
+  margin-bottom: 4px;
+}
+.workbench-sidebar-menu .ant-menu-item-group:last-of-type .ant-menu-item:last-child {
+  margin-bottom: 0;
+}
+
+.workbench-sidebar-menu .ant-menu-item.ant-menu-item-selected {
+  background: #1677ff !important;
+  color: #fff !important;
+}
+.workbench-sidebar-menu .ant-menu-item.ant-menu-item-selected .ant-menu-title-content,
+.workbench-sidebar-menu .ant-menu-item.ant-menu-item-selected .anticon {
+  color: #fff !important;
+}
+
+.workbench-sidebar-menu .ant-menu-item .sidebar-menu-icon img {
+  filter: none;
+}
+.workbench-sidebar-menu .ant-menu-item:hover .sidebar-menu-icon img,
+.workbench-sidebar-menu .ant-menu-item.ant-menu-item-active .sidebar-menu-icon img,
+.workbench-sidebar-menu .ant-menu-item.ant-menu-item-selected .sidebar-menu-icon img {
+  filter: brightness(0) invert(1);
+}
+
+/* ----- ② 收起态（仅图标）：精准计算以消除缝隙并保证对称 -----
+   总宽 112px = 侧栏 padding-left(24) + 菜单项 padding-left(16) + 图标(32) + 菜单项 padding-right(16) + 侧栏 padding-right(24) */
+.workbench-sider.ant-layout-sider-collapsed .workbench-sidebar-inner {
+  width: 112px !important;
+  min-width: 112px !important;
+  max-width: 112px !important;
+  padding: 56px 24px 24px 24px;
+}
+
+.workbench-sider.ant-layout-sider-collapsed .workbench-sidebar-menu .ant-menu-item-group-title {
+  padding-inline: 0;
+  text-align: center;
+  color: transparent;
+}
+
+.workbench-sider.ant-layout-sider-collapsed .workbench-sidebar-menu .ant-menu-title-content {
+  position: absolute !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+  clip: rect(0,0,0,0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.workbench-sider.ant-layout-sider-collapsed .workbench-sidebar-menu .ant-menu-item-group .ant-menu-item {
+  position: relative;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding-inline: 16px !important;
+  gap: 0 !important;
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.workbench-sider.ant-layout-sider-collapsed .workbench-sidebar-menu .ant-menu-item .ant-menu-item-icon,
+.workbench-sider.ant-layout-sider-collapsed .workbench-sidebar-menu .ant-menu-item .sidebar-menu-icon {
+  margin: 0 !important;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+}
+
+/* ========== Secondary menu panel ========== */
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.workbench-submenu-panel {
+  width: 240px;
+  margin: 24px 0;
+  flex-shrink: 0;
+  background: #fbfbfb;
+  border: 1px solid #eeeff1;
+  border-radius: 16px;
+  padding: 16px 0;
+  display: flex;
+  flex-direction: column;
+  animation: slideInLeft 0.3s cubic-bezier(0.2, 0, 0, 1) forwards;
+}
+
+/* 覆盖 Ant Design Menu 在二级面板里的默认样式 */
+.workbench-secondary-menu.ant-menu {
+  background: transparent;
+  border-inline-end: none !important;
+}
+
+/* 调试这里：修改二级菜单每一项的高度/行高 */
+.workbench-secondary-menu.ant-menu-inline .ant-menu-item {
+  height: 50px; /* ← 修改这一行调总体高度 */
+  line-height: 50px; /* ← 修改这一行调文字垂直居中（需与 height 一致） */
+  margin-inline: 4px;
+  width: calc(100% - 8px);
+  padding-inline: 16px !important;
+}
+
+.workbench-submenu-item-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.workbench-submenu-item-title {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.workbench-submenu-item-arrow {
+  width: 10px;
+  height: 10px;
+  flex-shrink: 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='M9 18l6-6-6-6'/%3E%3C/svg%3E") center/contain no-repeat;
+  opacity: 0.45;
+}
+
+.ant-menu-item-selected .workbench-submenu-item-arrow {
+  opacity: 1;
+}
+
+/* ========== Content ========== */
+.workbench-content {
+  min-height: calc(100vh - 56px);
+  padding: 32px;
+  overflow-y: auto;
+}
+
+/* Dashboard Layout Placeholder */
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto; /* Center in content area */
+}
+
+.dashboard-welcome {
+  display: block;
+  /*min-height: 108px;*/
+}
+
+.dashboard-welcome-grid {
+  width: 100%;
+}
+
+.dashboard-welcome-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+}
+
+.dashboard-title {
+  font-size: 38px;
+  font-weight: 700;
+  line-height: 46px;
+  color: #000;
+}
+
+.dashboard-subtitle {
+  font-size: 14px;
+  line-height: 22px;
+  color: rgba(0, 0, 0, 0.25);
+}
+
+.dashboard-welcome-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.dashboard-action-btn {
+  height: 32px;
+  border-radius: 6px;
+  font-size: 14px;
+  line-height: 22px;
+  padding-inline: 15px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dashboard-action-btn .ant-btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dashboard-action-btn-primary {
+  min-width: 150px;
+  box-shadow: 0 2px 0 rgba(5, 145, 255, 0.1);
+}
+
+.dashboard-action-btn-text {
+  min-width: 138px;
+  border: none;
+  color: #1677ff;
+  background: transparent;
+  box-shadow: none;
+}
+
+.dashboard-action-btn-text.ant-btn,
+.dashboard-action-btn-text.ant-btn:hover,
+.dashboard-action-btn-text.ant-btn:active,
+.dashboard-action-btn-text.ant-btn:focus,
+.dashboard-action-btn-text.ant-btn:focus-visible {
+  border: none !important;
+  box-shadow: none !important;
+  padding-inline: 15px;
+}
+
+.dashboard-action-btn-text.ant-btn:not(:disabled):hover {
+  color: #1677ff;
+  background: rgba(22, 119, 255, 0.06);
+}
+
+.dashboard-action-btn-text.ant-btn:not(:disabled):active {
+  color: #1677ff;
+  background: rgba(22, 119, 255, 0.12);
+}
+
+.dashboard-action-btn-text .ant-btn-icon,
+.dashboard-action-btn-text:hover .ant-btn-icon,
+.dashboard-action-btn-text:focus .ant-btn-icon {
+  color: #1677ff;
+}
+
+@media (max-width: 991px) {
+  .dashboard-welcome-right {
+    justify-content: flex-start;
+  }
+}
+
+.dashboard-section {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.dashboard-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dashboard-section-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.module-card {
+  width: 100%;
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.module-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.module-card-title {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 28px;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.module-card-body {
+  width: 100%;
+}
+
+.dashboard-management-btn {
+  height: 24px;
+  padding-inline: 7px;
+  border-color: #1677ff;
+  color: #1677ff;
+  border-radius: 4px;
+  font-size: 12px;
+  box-shadow: 0 2px 0 rgba(5, 145, 255, 0.1);
+}
+
+.dashboard-charts-row {
+  display: flex;
+  align-items: stretch;
+  gap: 24px;
+}
+
+.todo-add-btn {
+  height: 24px;
+  padding-inline: 7px;
+  border-color: #1677ff;
+  color: #1677ff;
+  font-size: 12px;
+  border-radius: 4px;
+  box-shadow: 0 2px 0 rgba(5, 145, 255, 0.1);
+}
+
+.todo-table .ant-table {
+  background: transparent;
+}
+
+.todo-table .ant-table-container {
+  border-inline: none !important;
+}
+
+.todo-table .ant-table-thead > tr > th {
+  background: transparent;
+  border-bottom: 1px solid #f0f0f0;
+  color: rgba(0, 0, 0, 0.25);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 20px;
+  padding: 10px 0 9px 0;
+  text-align: center;
+}
+
+.todo-table .ant-table-tbody > tr > td {
+  border-bottom: 1px solid #f0f0f0;
+  padding: 16px 0;
+  font-size: 12px;
+  line-height: 20px;
+  color: #000;
+  vertical-align: top;
+}
+
+.todo-header-checkbox .ant-checkbox-inner {
+  border-radius: 4px;
+}
+
+.todo-priority {
+  display: inline-block;
+  min-width: 26px;
+}
+
+.todo-task-name {
+  color: #000;
+}
+
+.todo-stage-tag.ant-tag {
+  margin-inline-end: 0;
+  min-width: 92px;
+  height: 22px;
+  line-height: 20px;
+  border-radius: 4px;
+  font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.todo-stage-tag--contracting.ant-tag {
+  background: #fff7e6;
+  color: #d46b08;
+}
+
+.todo-stage-tag--active.ant-tag {
+  background: #f6ffed;
+  color: #389e0d;
+}
+
+.todo-stage-tag--growth.ant-tag {
+  background: #e6f4ff;
+  color: #1677ff;
+}
+
+.todo-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  gap: 10px;
+}
+
+.todo-action-btn.ant-btn {
+  padding: 0;
+  height: 20px;
+  font-size: 12px;
+  line-height: 20px;
+}
+
+.todo-action-divider {
+  width: 1px;
+  height: 15px;
+  background: #f0f0f0;
+}
+
+.dashboard-layout-row {
+  width: 100%;
+}
+
+.dashboard-side-card {
+  height: 100%;
+  min-height: 220px;
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #eeeff1;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dashboard-side-card-title {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.dashboard-side-card-desc {
+  font-size: 14px;
+  line-height: 22px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.layout-style-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.layout-style-title {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 22px;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.layout-style-options {
+  display: flex;
+  gap: 10px;
+}
+
+.layout-style-option-btn {
+  min-width: 120px;
+}
+
+.layout-style-hint {
+  font-size: 12px;
+  line-height: 20px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.dashboard-chart-card {
+  flex: 1 1 0;
+  min-width: 0;
+  background: #fff !important;
+  border-radius: 4px;
+  border: 1px solid #eeeff1;
+  display: flex;
+  flex-direction: column;
+  height: 320px;
+  overflow: hidden;
+}
+
+.chart-title {
+  padding: 12px;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 28px;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.chart-title--small-strong {
+  font-size: var(--ant-font-size-sm, 12px);
+  font-weight: var(--ant-font-weight-strong, 700);
+  line-height: var(--ant-line-height-sm, 20px);
+}
+
+.chart-content {
+  flex: none;
+  height: 267px;
+  padding: 0 12px 12px;
+}
+
+.chart-content > div {
+  width: 100%;
+  height: 100%;
+}
+
+.take-rate-chart-content {
+  height: 267px;
+  padding: 0 12px 12px 8px;
+}
+
+.chart-content canvas,
+.chart-content svg {
+  image-rendering: -webkit-optimize-contrast;
+}
+
+.chart-placeholder {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(0, 0, 0, 0.25);
+  background: #fafafa;
+}
+
+@media (max-width: 991px) {
+  .dashboard-charts-row {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 991px) {
+  .workbench-header-center {
+    max-width: 200px;
+  }
+}
