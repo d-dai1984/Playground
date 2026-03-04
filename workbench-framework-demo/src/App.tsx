@@ -1,7 +1,17 @@
 import { useState } from 'react'
 import type { ReactNode } from 'react'
 import { Layout, Menu, Input, Avatar, Typography, Button, Row, Col, Modal, Table, Tag, message } from 'antd'
-import { SettingOutlined, SettingTwoTone, UserSwitchOutlined, PlusOutlined } from '@ant-design/icons'
+import {
+  CloseOutlined,
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+  SearchOutlined,
+  SettingOutlined,
+  SettingTwoTone,
+  UserSwitchOutlined,
+  PlusOutlined,
+} from '@ant-design/icons'
+import { Popover } from 'antd'
 import { Line, Bar, Pie } from '@ant-design/charts'
 import type { MenuProps, TableColumnsType } from 'antd'
 import {
@@ -45,9 +55,42 @@ const menuItems: MenuProps['items'] = [
 const submenuByKey: Record<string, { label: string; key: string }[]> = {
   'account-acquisition': [
     { label: 'Prospective Customers', key: 'prospective' },
-    { label: 'Navigation', key: 'navigation' },
+    { label: 'Lead Management', key: 'lead-management' },
     { label: 'Conversion Tracking', key: 'conversion' },
     { label: 'Acquisition Analysis', key: 'acquisition' },
+  ],
+  'account-management': [
+    { label: 'Merchant Profile', key: 'merchant-profile' },
+    { label: 'Account Settings', key: 'account-settings' },
+    { label: 'Permission Control', key: 'permission-control' },
+    { label: 'Audit Logs', key: 'audit-logs' },
+  ],
+  'activity-growth': [
+    { label: 'Campaign Planning', key: 'campaign-planning' },
+    { label: 'Traffic Insights', key: 'traffic-insights' },
+    { label: 'Growth Experiments', key: 'growth-experiments' },
+    { label: 'Retention Report', key: 'retention-report' },
+  ],
+  'settlement-risk': [
+    { label: 'Settlement Center', key: 'settlement-center' },
+    { label: 'Risk Overview', key: 'risk-overview' },
+    { label: 'Dispute Cases', key: 'dispute-cases' },
+    { label: 'Compliance Check', key: 'compliance-check' },
+  ],
+  task: [
+    { label: 'My Tasks', key: 'my-tasks' },
+    { label: 'Team Tasks', key: 'team-tasks' },
+    { label: 'Task Calendar', key: 'task-calendar' },
+  ],
+  'knowledge-tools': [
+    { label: 'Knowledge Base', key: 'knowledge-base' },
+    { label: 'Playbooks', key: 'playbooks' },
+    { label: 'Tool Center', key: 'tool-center' },
+  ],
+  notification: [
+    { label: 'All Notifications', key: 'all-notifications' },
+    { label: 'Mentions', key: 'mentions' },
+    { label: 'System Alerts', key: 'system-alerts' },
   ],
 }
 
@@ -66,6 +109,7 @@ type TodoRow = {
 
 type LayoutMode = 'single' | 'split-16-8'
 const LAYOUT_MODE_STORAGE_KEY = 'workbench.dashboard.layout.mode'
+const SIDEBAR_COLLAPSED_STORAGE_KEY = 'workbench.sidebar.collapsed'
 const stageTagClassMap: Record<string, string> = {
   contracting: 'todo-stage-tag--contracting',
   Active: 'todo-stage-tag--active',
@@ -249,6 +293,100 @@ const merchantFundPromoData = [
   { type: '分类八', value: 11 },
 ]
 
+const quickAccessItems = [
+  { key: 'contract-approval', label: 'Contract Approval', icon: '/quick-access-icons/contract-approval.svg' },
+  { key: 'pricing-tools', label: 'Pricing Tools', icon: '/quick-access-icons/pricing-tools.svg' },
+  { key: 'company-okr', label: 'Company OKR', icon: '/quick-access-icons/company-okr.svg' },
+  { key: 'create-new-merchant', label: 'Create New Merchant', icon: '/quick-access-icons/create-new-merchant.svg' },
+]
+
+const merchantRoleItems = [
+  {
+    key: 'bd-expansion',
+    title: 'BD / Expansion',
+    desc: 'Control and connect merchants and products.',
+    icon: '/merchant-role-icons/bd-expansion.svg',
+    tone: 'purple',
+  },
+  {
+    key: 'ceg-service',
+    title: 'CEG / Service',
+    desc: 'Connect with customers, solve problems.',
+    icon: '/merchant-role-icons/ceg-service.svg',
+    tone: 'blue',
+  },
+  {
+    key: 'pic-warehouse',
+    title: 'PIC / Warehouse',
+    desc: 'Manage inventory and price, ensure profit.',
+    icon: '/merchant-role-icons/pic-warehouse.svg',
+    tone: 'indigo',
+  },
+  {
+    key: 'mkt-market',
+    title: 'MKT / Market',
+    desc: 'Traffic distribution and event planning.',
+    icon: '/merchant-role-icons/mkt-market.svg',
+    tone: 'pink',
+  },
+  {
+    key: 'ops-operations',
+    title: 'OPS / Operations',
+    desc: 'Content maintenance and user conversion.',
+    icon: '/merchant-role-icons/ops-operations.svg',
+    tone: 'orange',
+  },
+  {
+    key: 'fis-finance',
+    title: 'FIS / Finance',
+    desc: 'Financial security and supervision.',
+    icon: '/merchant-role-icons/fis-finance.svg',
+    tone: 'green',
+  },
+  {
+    key: 'risk-control',
+    title: 'Risk Control',
+    desc: 'Full-link risk control, anti-corruption.',
+    icon: '/merchant-role-icons/risk-control.svg',
+    tone: 'red',
+  },
+  {
+    key: 'gds-distribution',
+    title: 'GDS / Distribution',
+    desc: 'Management of different distribution channels.',
+    icon: '/merchant-role-icons/gds-distribution.svg',
+    tone: 'cyan',
+  },
+  {
+    key: 'data',
+    title: 'Data',
+    desc: 'Data collection, cleaning, visualization.',
+    icon: '/merchant-role-icons/data.svg',
+    tone: 'teal',
+  },
+  {
+    key: 'admin',
+    title: 'Admin',
+    desc: 'Ensure normal workbench operation.',
+    icon: '/merchant-role-icons/admin.svg',
+    tone: 'gray',
+  },
+  {
+    key: 'platform',
+    title: 'Platform',
+    desc: 'Manage platform content and tools.',
+    icon: '/merchant-role-icons/platform.svg',
+    tone: 'slate',
+  },
+  {
+    key: 'manager-boss',
+    title: 'Manager / Boss',
+    desc: 'Focus on overall data and control.',
+    icon: '/merchant-role-icons/manager-boss.svg',
+    tone: 'yellow',
+  },
+] as const
+
 const takeRateConfig = {
   data: takeRateData,
   autoFit: true,
@@ -333,7 +471,11 @@ const merchantFundPromoConfig = {
 
 function App() {
   const [messageApi, contextHolder] = message.useMessage()
-  const [collapsed, setCollapsed] = useState(false)
+  const [collapsed, setCollapsed] = useState<boolean>(() => {
+    if (typeof window === 'undefined') return false
+    return window.localStorage.getItem(SIDEBAR_COLLAPSED_STORAGE_KEY) === 'true'
+  })
+  const [isBelowBreakpoint, setIsBelowBreakpoint] = useState(false)
   const [selectedKey, setSelectedKey] = useState('dashboard')
   const [openSubmenuKey, setOpenSubmenuKey] = useState<string | null>(null)
   const [selectedSubKey, setSelectedSubKey] = useState('navigation')
@@ -354,6 +496,12 @@ function App() {
     const subs = submenuByKey[key]
     setOpenSubmenuKey(subs?.length ? key : null)
     if (subs?.length) setSelectedSubKey(subs[0]?.key ?? '')
+
+    const shouldCollapse = key !== 'dashboard'
+    setCollapsed(shouldCollapse)
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem(SIDEBAR_COLLAPSED_STORAGE_KEY, String(shouldCollapse))
+    }
   }
 
   const subItems = openSubmenuKey ? submenuByKey[openSubmenuKey] ?? [] : []
@@ -371,6 +519,18 @@ function App() {
     setIsCustomPageModalOpen(false)
     messageApi.success('布局样式已保存，请刷新页面查看效果')
   }
+
+  const handleToggleSidebar = () => {
+    setCollapsed((prev) => {
+      const next = !prev
+      if (typeof window !== 'undefined') {
+        window.localStorage.setItem(SIDEBAR_COLLAPSED_STORAGE_KEY, String(next))
+      }
+      return next
+    })
+  }
+
+  const effectiveCollapsed = isBelowBreakpoint || collapsed
 
   const todoListCard = (
     <ModuleContainer
@@ -444,6 +604,65 @@ function App() {
     </ModuleContainer>
   )
 
+  const quickAccessCard = (
+    <ModuleContainer
+      title="Quick Access"
+      className="quick-access-module-card"
+      bodyClassName="quick-access-module-body"
+      action={
+        <Button size="small" icon={<SettingOutlined />} className="dashboard-management-btn">
+          Management
+        </Button>
+      }
+    >
+      <div className="quick-access-grid">
+        {quickAccessItems.map((item) => (
+          <div key={item.key} className="quick-access-entry">
+            <div className="quick-access-entry-icon">
+              <img src={item.icon} alt="" />
+            </div>
+            <div className="quick-access-entry-label">{item.label}</div>
+          </div>
+        ))}
+      </div>
+    </ModuleContainer>
+  )
+
+  const merchantSwitcherContent = (
+    <div className="merchant-switch-popover-content">
+      <div className="merchant-switch-modal-header">
+        <div className="merchant-switch-modal-title">Switch Workbench</div>
+        <button
+          type="button"
+          className="merchant-switch-modal-close-btn"
+          onClick={() => setIsMerchantModalOpen(false)}
+        >
+          <CloseOutlined />
+        </button>
+      </div>
+      <div className="merchant-switch-modal-search">
+        <Input
+          className="merchant-switch-search-input"
+          placeholder="Search for a role..."
+          prefix={<SearchOutlined />}
+        />
+      </div>
+      <div className="merchant-switch-modal-grid">
+        {merchantRoleItems.map((item) => (
+          <button key={item.key} type="button" className="merchant-role-item">
+            <span className={`merchant-role-icon merchant-role-icon--${item.tone}`}>
+              <img src={item.icon} alt="" />
+            </span>
+            <span className="merchant-role-content">
+              <span className="merchant-role-title">{item.title}</span>
+              <span className="merchant-role-desc">{item.desc}</span>
+            </span>
+          </button>
+        ))}
+      </div>
+    </div>
+  )
+
   const renderRightContent = () => {
     if (selectedKey === 'dashboard') {
       return (
@@ -503,6 +722,9 @@ function App() {
 
           {/* Dashboard */}
           <div className="dashboard-section">{dashboardCard}</div>
+
+          {/* Quick Access */}
+          <div className="dashboard-section">{quickAccessCard}</div>
         </div>
       )
     }
@@ -534,9 +756,19 @@ function App() {
             <img src="/images/logomark.svg" alt="logo" className="workbench-logo-mark" />
             <img src="/images/logotext.svg" alt="klook" className="workbench-logo-text" />
           </div>
-          <div className="workbench-merchant-btn" onClick={() => setIsMerchantModalOpen(true)}>
-            Merchant <span className="workbench-merchant-arrow" />
-          </div>
+          <Popover
+            open={isMerchantModalOpen}
+            onOpenChange={setIsMerchantModalOpen}
+            trigger="click"
+            placement="bottomLeft"
+            arrow={false}
+            overlayClassName="merchant-switch-popover"
+            content={merchantSwitcherContent}
+          >
+            <div className="workbench-merchant-btn">
+              Merchant <span className="workbench-merchant-arrow" />
+            </div>
+          </Popover>
         </div>
         <div className="workbench-header-center">
           <div className="workbench-search-bar" onClick={() => setIsSearchModalOpen(true)}>
@@ -555,9 +787,10 @@ function App() {
             className="workbench-sider workbench-sider--no-bg"
             width={280}
             collapsedWidth={112}
-            collapsed={collapsed}
+            collapsed={effectiveCollapsed}
             breakpoint="lg"
-            onBreakpoint={setCollapsed}
+            trigger={null}
+            onBreakpoint={setIsBelowBreakpoint}
           >
             <div className="workbench-sidebar-inner">
               <Menu
@@ -567,10 +800,18 @@ function App() {
                 className="workbench-sidebar-menu"
                 onClick={onMenuClick}
               />
+              <div className="workbench-sidebar-toggle-wrap">
+                <Button
+                  type="text"
+                  className="workbench-sidebar-toggle-btn"
+                  onClick={handleToggleSidebar}
+                  icon={effectiveCollapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+                />
+              </div>
             </div>
           </Sider>
           {openSubmenuKey && subItems.length > 0 && (
-            <aside className="workbench-submenu-panel">
+            <aside key={openSubmenuKey} className="workbench-submenu-panel">
               <Menu
                 mode="inline"
                 className="workbench-secondary-menu"
@@ -591,15 +832,6 @@ function App() {
         </div>
         <Content className="workbench-content">{renderRightContent()}</Content>
       </Layout>
-
-      <Modal
-        title="Merchant Switcher"
-        open={isMerchantModalOpen}
-        onCancel={() => setIsMerchantModalOpen(false)}
-        footer={null}
-      >
-        <p>Merchant selection list will go here.</p>
-      </Modal>
 
       <Modal
         title="Search"

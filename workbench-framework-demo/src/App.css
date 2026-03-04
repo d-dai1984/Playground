@@ -3,7 +3,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-inline: 32px;
+  /* Adjust this value to move logo from left edge only. */
+  padding-left: 40px;
+  padding-right: 32px;
   height: 56px;
   line-height: 56px;
   background: #fff !important;
@@ -54,6 +56,182 @@
 
 .workbench-merchant-btn:hover {
   background: rgba(22, 119, 255, 0.04);
+}
+
+/* ========== Merchant Switch Popup ========== */
+.merchant-switch-popover .ant-popover-inner {
+  width: min(896px, calc(100vw - 32px));
+  padding: 0;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.merchant-switch-popover .ant-popover-inner-content {
+  padding: 0;
+}
+
+.merchant-switch-popover .ant-popover {
+  animation: merchantPopoverIn 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes merchantPopoverIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.merchant-switch-popover-content {
+  background: #fff;
+}
+
+.merchant-switch-modal-close-btn {
+  border: 0;
+  background: transparent;
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  color: #6b7280;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.merchant-switch-modal-close-btn:hover {
+  background: rgba(0, 0, 0, 0.04);
+  color: #374151;
+}
+
+.merchant-switch-modal-header {
+  height: 84px;
+  padding: 0 32px;
+  border-bottom: 1px solid #f3f4f6;
+  display: flex;
+  align-items: center;
+}
+
+.merchant-switch-modal-title {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 32px;
+  color: #1f2937;
+}
+
+.merchant-switch-modal-search {
+  padding: 16px 32px;
+  background: #f9fafb;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.merchant-switch-search-input.ant-input-affix-wrapper {
+  height: 42px;
+  border-radius: 21px;
+  border-color: #e5e7eb;
+  background: #fff;
+}
+
+.merchant-switch-search-input .anticon {
+  color: #9ca3af;
+}
+
+.merchant-switch-modal-grid {
+  padding: 32px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: 26px;
+  row-gap: 34px;
+  background: rgba(249, 250, 251, 0.5);
+}
+
+.merchant-role-item {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  width: 100%;
+  text-align: left;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.merchant-role-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.merchant-role-icon img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  display: block;
+}
+
+.merchant-role-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.merchant-role-title {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  color: #1f2937;
+}
+
+.merchant-role-desc {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 20px;
+  color: #6b7280;
+}
+
+.merchant-role-icon--purple {
+  background: #f3e8ff;
+}
+.merchant-role-icon--blue {
+  background: #dbeafe;
+}
+.merchant-role-icon--indigo {
+  background: #e0e7ff;
+}
+.merchant-role-icon--pink {
+  background: #fce7f3;
+}
+.merchant-role-icon--orange {
+  background: #ffedd4;
+}
+.merchant-role-icon--green {
+  background: #dcfce7;
+}
+.merchant-role-icon--red {
+  background: #ffe2e2;
+}
+.merchant-role-icon--cyan {
+  background: #cefafe;
+}
+.merchant-role-icon--teal {
+  background: #cbfbf1;
+}
+.merchant-role-icon--gray {
+  background: #f3f4f6;
+}
+.merchant-role-icon--slate {
+  background: #f1f5f9;
+}
+.merchant-role-icon--yellow {
+  background: #fef9c2;
 }
 
 .workbench-merchant-arrow {
@@ -139,9 +317,31 @@
   padding: 56px 24px 24px 24px;
   width: 280px;
   min-width: 280px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.workbench-sidebar-toggle-wrap {
+  display: flex;
+  justify-content: flex-start;
+  padding-left: 16px; /* Align with MENU title text left edge */
+  margin-top: auto;
+}
+
+.workbench-sidebar-toggle-btn.ant-btn {
+  width: 24px;
+  height: 24px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.workbench-sidebar-toggle-btn.ant-btn:hover {
+  color: rgba(0, 0, 0, 0.88);
+  background: rgba(0, 0, 0, 0.04);
 }
 
 .workbench-sidebar-menu {
+  flex: 1;
   height: auto !important;
   border-right: none !important;
   background: transparent !important;
@@ -218,6 +418,11 @@
   padding: 56px 24px 24px 24px;
 }
 
+.workbench-sider.ant-layout-sider-collapsed .workbench-sidebar-toggle-wrap {
+  justify-content: flex-start;
+  padding-left: 16px;
+}
+
 .workbench-sider.ant-layout-sider-collapsed .workbench-sidebar-menu .ant-menu-item-group-title {
   padding-inline: 0;
   text-align: center;
@@ -259,7 +464,13 @@
 @keyframes slideInLeft {
   from {
     opacity: 0;
-    transform: translateX(-20px);
+    /* Rebound tuning #1: entry distance (larger value = stronger slide-in). */
+    transform: translateX(-28px);
+  }
+  72% {
+    opacity: 1;
+    /* Rebound tuning #2: overshoot distance (set 0 to disable rebound). */
+    transform: translateX(5px);
   }
   to {
     opacity: 1;
@@ -277,7 +488,11 @@
   padding: 16px 0;
   display: flex;
   flex-direction: column;
-  animation: slideInLeft 0.3s cubic-bezier(0.2, 0, 0, 1) forwards;
+  /* Rebound tuning #3: duration + easing curve. */
+  animation: slideInLeft 0.42s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-direction: normal;
+  transform-origin: left center;
+  will-change: transform, opacity;
 }
 
 /* 覆盖 Ant Design Menu 在二级面板里的默认样式 */
@@ -674,6 +889,47 @@
   color: rgba(0, 0, 0, 0.45);
 }
 
+.quick-access-grid {
+  display: flex;
+  gap: 24px;
+  width: 100%;
+}
+
+.quick-access-entry {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 126px;
+  background: #e6f4ff;
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.quick-access-entry-icon {
+  width: 46px;
+  height: 46px;
+  flex-shrink: 0;
+}
+
+.quick-access-entry-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.quick-access-entry-label {
+  font-size: var(--ant-font-size-sm, 12px);
+  font-weight: var(--ant-font-weight-strong, 700);
+  line-height: var(--ant-line-height-sm, 20px);
+  color: rgba(0, 0, 0, 0.85);
+  text-align: center;
+}
+
 .dashboard-chart-card {
   flex: 1 1 0;
   min-width: 0;
@@ -732,6 +988,10 @@
 
 @media (max-width: 991px) {
   .dashboard-charts-row {
+    flex-direction: column;
+  }
+
+  .quick-access-grid {
     flex-direction: column;
   }
 }
