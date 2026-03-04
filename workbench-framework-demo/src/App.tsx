@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { ReactNode } from 'react'
-import { Layout, Menu, Input, Avatar, Typography, Button, Row, Col, Modal, Table, Tag, message } from 'antd'
+import { Layout, Menu, Input, Avatar, Typography, Button, Row, Col, Modal, Table, Tag, Progress, message } from 'antd'
 import {
   CloseOutlined,
+  InfoCircleOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   SearchOutlined,
@@ -34,7 +35,7 @@ const menuItems: MenuProps['items'] = [
     type: 'group',
     label: 'MENU',
     children: [
-      { key: 'dashboard', label: 'Dashboard', icon: <DashboardIcon /> },
+      { key: 'My Bench', label: 'My Bench', icon: <DashboardIcon /> },
       { key: 'account-acquisition', label: 'Account Acquisition', icon: <AccountAcquisitionIcon /> },
       { key: 'account-management', label: 'Account Management', icon: <AccountManagementIcon /> },
       { key: 'activity-growth', label: 'Activity & Growth', icon: <ActivityGrowthIcon /> },
@@ -387,6 +388,28 @@ const merchantRoleItems = [
   },
 ] as const
 
+const productStateCards = [
+  { title: 'High risk', value: '2', desc: 'Need immediate attention', tone: 'danger' },
+  { title: 'Healthy', value: '2', desc: 'Good to sell', tone: 'success' },
+  { title: 'Improvable', value: '1', desc: 'Opportunity to grow', tone: 'warning' },
+  { title: 'Vertical rank', value: 'Under 50%', desc: 'in Theme Parks & Tours', tone: 'accent' },
+] as const
+
+const whyToDoItems = [
+  {
+    title: 'Boost Bookings by XX%',
+    desc: 'Activate proven, high-conversion settings.',
+  },
+  {
+    title: 'Top-Seller Strategies',
+    desc: 'Outpace competition with best-seller configurations.',
+  },
+  {
+    title: '10-Minute Optimization',
+    desc: 'Improve results effortlessly with quick, simple tasks.',
+  },
+]
+
 const takeRateConfig = {
   data: takeRateData,
   autoFit: true,
@@ -476,7 +499,7 @@ function App() {
     return window.localStorage.getItem(SIDEBAR_COLLAPSED_STORAGE_KEY) === 'true'
   })
   const [isBelowBreakpoint, setIsBelowBreakpoint] = useState(false)
-  const [selectedKey, setSelectedKey] = useState('dashboard')
+  const [selectedKey, setSelectedKey] = useState('My Bench')
   const [openSubmenuKey, setOpenSubmenuKey] = useState<string | null>(null)
   const [selectedSubKey, setSelectedSubKey] = useState('navigation')
 
@@ -484,6 +507,7 @@ function App() {
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false)
   const [isManagerViewModalOpen, setIsManagerViewModalOpen] = useState(false)
   const [isCustomPageModalOpen, setIsCustomPageModalOpen] = useState(false)
+  const [taskProgressPercent, setTaskProgressPercent] = useState(0)
   const [layoutMode, setLayoutMode] = useState<LayoutMode>(() => {
     if (typeof window === 'undefined') return 'single'
     const saved = window.localStorage.getItem(LAYOUT_MODE_STORAGE_KEY)
@@ -497,7 +521,7 @@ function App() {
     setOpenSubmenuKey(subs?.length ? key : null)
     if (subs?.length) setSelectedSubKey(subs[0]?.key ?? '')
 
-    const shouldCollapse = key !== 'dashboard'
+    const shouldCollapse = key !== 'dashboard' && key !== 'My Bench'
     setCollapsed(shouldCollapse)
     if (typeof window !== 'undefined') {
       window.localStorage.setItem(SIDEBAR_COLLAPSED_STORAGE_KEY, String(shouldCollapse))
@@ -531,6 +555,27 @@ function App() {
   }
 
   const effectiveCollapsed = isBelowBreakpoint || collapsed
+
+  useEffect(() => {
+    const target = 0.3
+    const duration = 900
+    const start = performance.now()
+    let rafId = 0
+
+    const tick = (now: number) => {
+      const elapsed = now - start
+      const t = Math.min(elapsed / duration, 1)
+      // Ease-out cubic for visible but smooth finish.
+      const eased = 1 - Math.pow(1 - t, 3)
+      setTaskProgressPercent(target * eased)
+      if (t < 1) {
+        rafId = window.requestAnimationFrame(tick)
+      }
+    }
+
+    rafId = window.requestAnimationFrame(tick)
+    return () => window.cancelAnimationFrame(rafId)
+  }, [])
 
   const todoListCard = (
     <ModuleContainer
@@ -628,6 +673,74 @@ function App() {
     </ModuleContainer>
   )
 
+  const topOverviewCard = (
+    <ModuleContainer title="Top Overview" className="overview-module-card" bodyClassName="overview-module-body">
+      <Row gutter={[20, 20]} className="overview-grid">
+        <Col xs={24} lg={7}>
+          <div className="overview-card overview-card--progress">
+            <div className="overview-card-title-row">
+              <div className="overview-card-title">Task progress</div>
+              <InfoCircleOutlined className="overview-card-info-icon" />
+            </div>
+            <div className="overview-progress-wrap">
+              <div className="overview-progress-gauge">
+                <Progress
+                  type="circle"
+                  percent={Math.round(taskProgressPercent * 100)}
+                  size={148}
+                  strokeWidth={10}
+                  strokeColor="#f44622"
+                  trailColor="#f0f0f0"
+                  format={(percent) => `${percent ?? 0}%`}
+                />
+              </div>
+              <div className="overview-progress-main">22 tasks to do</div>
+              <div className="overview-progress-sub">Complete it can increase sales</div>
+            </div>
+          </div>
+        </Col>
+
+        <Col xs={24} lg={10}>
+          <div className="overview-card overview-card--product">
+            <div className="overview-card-title-row">
+              <div className="overview-card-title">Product state</div>
+              <InfoCircleOutlined className="overview-card-info-icon" />
+            </div>
+            <div className="overview-product-grid">
+              {productStateCards.map((item) => (
+                <div key={item.title} className={`overview-product-item overview-product-item--${item.tone}`}>
+                  <div className={`overview-product-bar overview-product-bar--${item.tone}`} />
+                  <div className="overview-product-content">
+                    <div className="overview-product-item-title">{item.title}</div>
+                    <div className="overview-product-item-value">{item.value}</div>
+                    <div className="overview-product-item-desc">{item.desc}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Col>
+
+        <Col xs={24} lg={7}>
+          <div className="overview-card overview-card--why">
+            <div className="overview-card-title-row">
+              <div className="overview-card-title">Why to do</div>
+            </div>
+            <div className="overview-why-list">
+              {whyToDoItems.map((item, idx) => (
+                <div key={item.title} className="overview-why-item">
+                  <div className="overview-why-title">{item.title}</div>
+                  <div className="overview-why-desc">{item.desc}</div>
+                  {idx < whyToDoItems.length - 1 && <div className="overview-why-divider" />}
+                </div>
+              ))}
+            </div>
+          </div>
+        </Col>
+      </Row>
+    </ModuleContainer>
+  )
+
   const merchantSwitcherContent = (
     <div className="merchant-switch-popover-content">
       <div className="merchant-switch-modal-header">
@@ -664,7 +777,7 @@ function App() {
   )
 
   const renderRightContent = () => {
-    if (selectedKey === 'dashboard') {
+    if (selectedKey === 'dashboard' || selectedKey === 'My Bench') {
       return (
         <div className="dashboard-container">
           {/* Welcome */}
@@ -699,6 +812,9 @@ function App() {
             </Row>
           </div>
 
+          {/* Top Overview */}
+          <div className="dashboard-section">{topOverviewCard}</div>
+
           {/* Todo List */}
           <div className="dashboard-section">
             {layoutMode === 'split-16-8' ? (
@@ -725,6 +841,7 @@ function App() {
 
           {/* Quick Access */}
           <div className="dashboard-section">{quickAccessCard}</div>
+
         </div>
       )
     }
@@ -870,21 +987,26 @@ function App() {
       >
         <div className="layout-style-picker">
           <div className="layout-style-title">布局样式</div>
-          <div className="layout-style-options">
-            <Button
-              className="layout-style-option-btn"
-              type={layoutModeDraft === 'single' ? 'primary' : 'default'}
+          <div className="layout-style-thumbnail-grid">
+            <button
+              type="button"
+              className={`layout-style-thumbnail ${layoutModeDraft === 'single' ? 'is-active' : ''}`}
               onClick={() => setLayoutModeDraft('single')}
             >
-              1 Column
-            </Button>
-            <Button
-              className="layout-style-option-btn"
-              type={layoutModeDraft === 'split-16-8' ? 'primary' : 'default'}
+              <span className="layout-style-thumbnail-preview layout-style-thumbnail-preview--single">
+                <span />
+              </span>
+            </button>
+            <button
+              type="button"
+              className={`layout-style-thumbnail ${layoutModeDraft === 'split-16-8' ? 'is-active' : ''}`}
               onClick={() => setLayoutModeDraft('split-16-8')}
             >
-              16 + 8
-            </Button>
+              <span className="layout-style-thumbnail-preview layout-style-thumbnail-preview--split">
+                <span className="layout-col-left" />
+                <span className="layout-col-right" />
+              </span>
+            </button>
           </div>
           <div className="layout-style-hint">
             Save 后刷新页面，即可查看所选布局。
