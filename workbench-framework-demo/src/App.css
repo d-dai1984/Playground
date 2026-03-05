@@ -290,9 +290,52 @@
   gap: 8px;
 }
 
+.workbench-header-quick-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-right: 4px;
+}
+
+.workbench-header-icon-btn {
+  width: 24px;
+  height: 24px;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: rgba(0, 0, 0, 0.35);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.workbench-header-icon-btn .anticon {
+  font-size: 24px;
+}
+
+.workbench-header-icon-btn:hover {
+  color: rgba(0, 0, 0, 0.55);
+}
+
 .workbench-username {
   font-weight: 700 !important;
   color: #000;
+}
+
+.workbench-user-trigger {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.workbench-user-trigger-arrow {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
 }
 
 /* ========== Sidebar ========== */
@@ -497,7 +540,7 @@
 
 .workbench-submenu-panel {
   width: 240px;
-  margin: 24px 0;
+  margin: 32px 0;
   flex-shrink: 0;
   background: #fbfbfb;
   border: 1px solid #eeeff1;
@@ -1022,6 +1065,18 @@
   padding-right: 10px !important;
 }
 
+.overview-grid > .ant-col:first-child {
+  padding-left: 0 !important;
+}
+
+.overview-grid > .ant-col:last-child {
+  padding-right: 0 !important;
+}
+
+.overview-module-body {
+  padding: 0;
+}
+
 .overview-card {
   height: 300px;
   border: 1px solid #eeeff1;
@@ -1096,21 +1151,25 @@
 }
 
 .overview-card--product {
-  gap: 12px;
+  gap: 10px;
 }
 
 .overview-product-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  flex: 1;
+  min-height: 0;
 }
 
 .overview-product-item {
-  min-height: 112px;
+  min-height: 0;
   border-radius: 12px;
-  padding: 8px 16px;
+  padding: 8px 12px;
   display: flex;
-  gap: 12px;
+  gap: 10px;
+  overflow: hidden;
 }
 
 .overview-product-content {
@@ -1121,7 +1180,7 @@
 
 .overview-product-bar {
   width: 4px;
-  height: 60px;
+  height: 52px;
   margin-top: 4px;
   border-radius: 2px;
   flex-shrink: 0;
@@ -1136,14 +1195,14 @@
 
 .overview-product-item-value {
   font-size: 24px;
-  line-height: 32px;
+  line-height: 30px;
   font-weight: 500;
   color: rgba(0, 0, 0, 0.85);
 }
 
 .overview-product-item-desc {
   font-size: 12px;
-  line-height: 22px;
+  line-height: 20px;
   color: rgba(0, 0, 0, 0.45);
 }
 

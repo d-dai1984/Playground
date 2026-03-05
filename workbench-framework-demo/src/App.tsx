@@ -1,9 +1,13 @@
 import { useEffect, useState } from 'react'
 import type { ReactNode } from 'react'
-import { Layout, Menu, Input, Avatar, Typography, Button, Row, Col, Modal, Table, Tag, Progress, message } from 'antd'
+import { Layout, Menu, Input, Avatar, Typography, Button, Row, Col, Modal, Table, Tag, Progress, Dropdown, message } from 'antd'
 import {
+  BellOutlined,
+  CheckSquareOutlined,
   CloseOutlined,
   MessageOutlined,
+  DownOutlined,
+  FileDoneOutlined,
   InfoCircleOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -11,6 +15,9 @@ import {
   SendOutlined,
   SettingOutlined,
   SettingTwoTone,
+  UserOutlined,
+  SafetyCertificateOutlined,
+  LogoutOutlined,
   UserSwitchOutlined,
   PlusOutlined,
 } from '@ant-design/icons'
@@ -586,6 +593,12 @@ function App() {
   }
 
   const effectiveCollapsed = isBelowBreakpoint || collapsed
+  const userMenuItems: MenuProps['items'] = [
+    { key: 'profile', label: 'Profile', icon: <UserOutlined /> },
+    { key: 'super-admin', label: 'Super Admin', icon: <SafetyCertificateOutlined /> },
+    { key: 'settings', label: 'System Settings', icon: <SettingOutlined /> },
+    { key: 'logout', label: 'Log out', icon: <LogoutOutlined /> },
+  ]
 
   useEffect(() => {
     const target = 0.3
@@ -925,8 +938,24 @@ function App() {
           </div>
         </div>
         <div className="workbench-header-right">
+          <div className="workbench-header-quick-actions">
+            <button type="button" className="workbench-header-icon-btn" aria-label="Message Center">
+              <BellOutlined />
+            </button>
+            <button type="button" className="workbench-header-icon-btn" aria-label="Process Approval">
+              <FileDoneOutlined />
+            </button>
+            <button type="button" className="workbench-header-icon-btn" aria-label="Task Management">
+              <CheckSquareOutlined />
+            </button>
+          </div>
           <Avatar src="/images/avatar.svg" size={32} />
-          <Text className="workbench-username">Alex Kelly</Text>
+          <Dropdown menu={{ items: userMenuItems }} trigger={['click']} placement="bottomRight">
+            <button type="button" className="workbench-user-trigger">
+              <Text className="workbench-username">Alex Kelly</Text>
+              <DownOutlined className="workbench-user-trigger-arrow" />
+            </button>
+          </Dropdown>
         </div>
       </Header>
       <Layout>
