@@ -3,10 +3,12 @@ import type { ReactNode } from 'react'
 import { Layout, Menu, Input, Avatar, Typography, Button, Row, Col, Modal, Table, Tag, Progress, message } from 'antd'
 import {
   CloseOutlined,
+  MessageOutlined,
   InfoCircleOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   SearchOutlined,
+  SendOutlined,
   SettingOutlined,
   SettingTwoTone,
   UserSwitchOutlined,
@@ -109,6 +111,7 @@ type TodoRow = {
 }
 
 type LayoutMode = 'single' | 'split-16-8'
+type FeedbackMessage = { id: string; role: 'agent' | 'user'; text: string }
 const LAYOUT_MODE_STORAGE_KEY = 'workbench.dashboard.layout.mode'
 const SIDEBAR_COLLAPSED_STORAGE_KEY = 'workbench.sidebar.collapsed'
 const stageTagClassMap: Record<string, string> = {
@@ -507,6 +510,15 @@ function App() {
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false)
   const [isManagerViewModalOpen, setIsManagerViewModalOpen] = useState(false)
   const [isCustomPageModalOpen, setIsCustomPageModalOpen] = useState(false)
+  const [isFeedbackOpen, setIsFeedbackOpen] = useState(false)
+  const [feedbackDraft, setFeedbackDraft] = useState('')
+  const [feedbackMessages, setFeedbackMessages] = useState<FeedbackMessage[]>([
+    {
+      id: 'feedback-welcome',
+      role: 'agent',
+      text: 'Hi! Please share your feedback about this page.',
+    },
+  ])
   const [taskProgressPercent, setTaskProgressPercent] = useState(0)
   const [layoutMode, setLayoutMode] = useState<LayoutMode>(() => {
     if (typeof window === 'undefined') return 'single'
@@ -552,6 +564,25 @@ function App() {
       }
       return next
     })
+  }
+
+  const handleSendFeedback = () => {
+    const text = feedbackDraft.trim()
+    if (!text) return
+
+    const userMessage: FeedbackMessage = {
+      id: `feedback-user-${Date.now()}`,
+      role: 'user',
+      text,
+    }
+    const replyMessage: FeedbackMessage = {
+      id: `feedback-agent-${Date.now() + 1}`,
+      role: 'agent',
+      text: 'Thanks! Your feedback has been captured for review.',
+    }
+
+    setFeedbackMessages((prev) => [...prev, userMessage, replyMessage])
+    setFeedbackDraft('')
   }
 
   const effectiveCollapsed = isBelowBreakpoint || collapsed
@@ -1013,6 +1044,51 @@ function App() {
           </div>
         </div>
       </Modal>
+
+      <button
+        type="button"
+        className="feedback-fab"
+        onClick={() => setIsFeedbackOpen((prev) => !prev)}
+        aria-label="Open feedback"
+      >
+        <MessageOutlined />
+      </button>
+
+      {isFeedbackOpen && (
+        <div className="feedback-panel" role="dialog" aria-label="Feedback panel">
+          <div className="feedback-panel-header">
+            <div className="feedback-panel-title">Feedback</div>
+            <button
+              type="button"
+              className="feedback-panel-close"
+              onClick={() => setIsFeedbackOpen(false)}
+              aria-label="Close feedback"
+            >
+              <CloseOutlined />
+            </button>
+          </div>
+          <div className="feedback-panel-body">
+            {feedbackMessages.map((msg) => (
+              <div
+                key={msg.id}
+                className={`feedback-bubble ${msg.role === 'user' ? 'feedback-bubble--user' : 'feedback-bubble--agent'}`}
+              >
+                {msg.text}
+              </div>
+            ))}
+          </div>
+          <div className="feedback-panel-footer">
+            <Input
+              value={feedbackDraft}
+              onChange={(e) => setFeedbackDraft(e.target.value)}
+              onPressEnter={handleSendFeedback}
+              placeholder="Type your feedback..."
+              className="feedback-input"
+            />
+            <Button type="primary" icon={<SendOutlined />} onClick={handleSendFeedback} />
+          </div>
+        </div>
+      )}
     </Layout>
   )
 }

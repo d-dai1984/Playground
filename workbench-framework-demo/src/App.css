@@ -1264,6 +1264,134 @@
   background: #fafafa;
 }
 
+/* ========== Feedback Floating ========== */
+.feedback-fab {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  width: 52px;
+  height: 52px;
+  border: 0;
+  border-radius: 999px;
+  background: #1677ff;
+  color: #fff;
+  font-size: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(22, 119, 255, 0.28);
+  cursor: pointer;
+  z-index: 1200;
+  transition: transform 0.16s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.16s ease;
+}
+
+.feedback-fab:hover {
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: 0 10px 28px rgba(22, 119, 255, 0.34);
+}
+
+.feedback-panel {
+  position: fixed;
+  right: 24px;
+  bottom: 88px;
+  width: 340px;
+  height: 420px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.14);
+  display: flex;
+  flex-direction: column;
+  z-index: 1200;
+  animation: feedbackPanelIn 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes feedbackPanelIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.feedback-panel-header {
+  height: 52px;
+  padding: 0 14px 0 16px;
+  border-bottom: 1px solid #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.feedback-panel-title {
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.feedback-panel-close {
+  width: 28px;
+  height: 28px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: rgba(0, 0, 0, 0.45);
+  cursor: pointer;
+}
+
+.feedback-panel-close:hover {
+  background: rgba(0, 0, 0, 0.04);
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.feedback-panel-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: #fafafa;
+}
+
+.feedback-bubble {
+  max-width: 86%;
+  border-radius: 12px;
+  padding: 8px 10px;
+  font-size: 12px;
+  line-height: 20px;
+}
+
+.feedback-bubble--agent {
+  align-self: flex-start;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  color: rgba(0, 0, 0, 0.85);
+}
+
+.feedback-bubble--user {
+  align-self: flex-end;
+  background: #e6f4ff;
+  border: 1px solid #91caff;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.feedback-panel-footer {
+  border-top: 1px solid #f0f0f0;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.feedback-input {
+  flex: 1;
+}
+
 @media (max-width: 991px) {
   .dashboard-charts-row {
     flex-direction: column;
